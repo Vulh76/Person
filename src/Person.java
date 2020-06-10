@@ -26,7 +26,7 @@ public class Person {
                 person.spouse.divorce();
                 person.divorce();
             }
-            spouse = person;
+            this.spouse = person;
             result = true;
         }
 
@@ -38,9 +38,12 @@ public class Person {
      * @return true - if person status has been changed
      */
     public boolean divorce(){
-        boolean result = spouse != null;
-        spouse = null;
-        return result;
+        if(this.spouse != null)
+        {
+            this.spouse = null;
+            return true;
+        }
+        return false;
     }
 
 }
