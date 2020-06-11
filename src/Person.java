@@ -15,22 +15,19 @@ public class Person {
      * @return - returns true if this person has another gender than passed person and they are not husband and wife, false otherwise
      */
     public boolean marry(Person person) {
-        boolean result = false;
-
         if(this.man != person.man && this.spouse != person){
             if (this.spouse != null) {
-                this.spouse.divorce();
                 this.divorce();
             }
             if (person.spouse != null) {
-                person.spouse.divorce();
                 person.divorce();
             }
             this.spouse = person;
-            result = true;
+            person.spouse = this;
+            return true;
         }
 
-        return result;
+        return false;
     }
 
     /**
@@ -40,10 +37,29 @@ public class Person {
     public boolean divorce(){
         if(this.spouse != null)
         {
+            this.spouse.spouse = null;
             this.spouse = null;
             return true;
         }
         return false;
     }
 
+    public String name() {
+        return this.name;
+    }
+
+    public String toString() {
+        String result = "Имя: " + this.name + "\r\n";
+        result += "Пол: ";
+        result += this.man ? "Муж.\r\n" : "Жен.\r\n";
+        result += "Семейное положение: ";
+        if (this.man) {
+            result += this.spouse != null ? "женат на " + this.spouse.name : "не женат\r\n";
+        }
+        else {
+            result += this.spouse != null ? "замужем за " + this.spouse.name : "не замужем\r\n";
+        }
+
+        return result;
+    }
 }
